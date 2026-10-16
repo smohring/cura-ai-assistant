@@ -20,4 +20,5 @@ First release.
 - Providers: Claude CLI (default), OpenAI-compatible API, Gemini API, Codex CLI, Gemini CLI,
   Ollama. Only Claude and the Ollama model list were tried with a live account.
 - The assistant dialog does not block Cura's main window.
+- Calls to Claude ignore the user's own Claude settings and instructions (`--setting-sources local`).
 - Tested with Cura 5.13 on Windows and one delta printer.
