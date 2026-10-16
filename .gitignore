@@ -36,3 +36,4 @@ Thumbs.db
 
 # Packaged plugin builds
 *.curapackage
+.release-notes.tmp
