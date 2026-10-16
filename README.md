@@ -32,6 +32,27 @@ Every request is evaluated by the model: a planning step splits a message into u
 (handling the part and setup, orientation, print settings), adds what the goal needs even if you did
 not name it, and runs them one after another. Anything you do not want, you untick or undo.
 
+## Screenshots
+
+One sentence in, a plan out. The assistant splits the message into tasks, runs the first, and asks
+for what it cannot know (here: which way the shelf pushes on the bracket):
+
+![The assistant plans three steps for one sentence and asks about the load direction](docs/images/assistant-plan.png)
+
+After applying the part change, the three scaled copies sit nested on the plate in Cura (one undo
+step, Ctrl+Z takes them all back):
+
+![Three scaled copies of the bracket on the build plate in Cura](docs/images/cura-copies.png)
+
+With the load direction set, the answer comes as measured orientations plus a settings proposal.
+Values the user had set themselves are marked and left unticked:
+
+![Ranked orientations and a settings proposal with the user's own values marked](docs/images/assistant-result.png)
+
+The provider and model are chosen on the options page; nothing changes until you press Apply:
+
+![The options page: provider, model, effort](docs/images/options.png)
+
 ## How it stays trustworthy
 
 - **The model never touches the mesh and never executes anything.** It picks from a fixed list of

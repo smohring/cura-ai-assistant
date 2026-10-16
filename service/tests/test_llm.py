@@ -44,6 +44,7 @@ def test_call_uses_no_tools_no_shell_and_prompt_on_stdin():
     assert args[args.index("--json-schema") + 1] == json.dumps(SCHEMA)
     assert args[args.index("--system-prompt") + 1] == "sys"
     assert "--strict-mcp-config" in args and "--no-session-persistence" in args
+    assert args[args.index("--setting-sources") + 1] == "local"  # the user's own context stays out
     assert kwargs["input"] == "the prompt"
     assert kwargs.get("shell") is not True
     assert os.path.basename(kwargs["cwd"]) != "Cura-MCP"

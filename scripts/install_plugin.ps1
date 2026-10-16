@@ -2,7 +2,8 @@
 # Run after every change under cura_extension\, then restart Cura.
 param(
     [string]$CuraVersion = "5.13",
-    [switch]$FakeClaude  # canned answers instead of the real Claude CLI, for UI tests only
+    [switch]$FakeClaude,  # canned answers instead of the real Claude CLI, for UI tests only
+    [switch]$TestTrigger  # real model, but the dialog opens when a trigger file appears (screenshots)
 )
 
 $repo = Split-Path -Parent $PSScriptRoot
@@ -21,6 +22,10 @@ $config = [ordered]@{
     python      = $python
     service_dir = Join-Path $repo "service"
     work_dir    = $workDir
+}
+if ($TestTrigger -and -not $FakeClaude) {
+    $config.open_trigger = Join-Path $workDir "open_assistant.trigger"
+    $config.export_dir = Join-Path $workDir "export"
 }
 if ($FakeClaude) {
     $config.claude = @($python, (Join-Path $repo "scripts\fake_claude.py"))

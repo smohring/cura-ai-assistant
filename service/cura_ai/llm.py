@@ -91,6 +91,7 @@ class ClaudeCliClient:
             "--strict-mcp-config",
             "--disable-slash-commands",
             "--no-session-persistence",
+            "--setting-sources", "local",  # not the user's own CLAUDE.md, name and language rules
             *(["--model", self._model] if self._model else []),
             *(["--effort", self._effort] if self._effort else []),
         ]  # fmt: skip
