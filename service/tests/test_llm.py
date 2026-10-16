@@ -130,7 +130,7 @@ def test_find_claude_accepts_a_json_command_for_stand_in_scripts(monkeypatch):
 def test_find_claude_picks_newest_numeric_version(monkeypatch, tmp_path):
     monkeypatch.delenv("CURA_AI_CLAUDE", raising=False)
     monkeypatch.setattr("shutil.which", lambda _: None)
-    monkeypatch.setattr("cura_ai.llm.Path.exists", lambda self: False)
+    monkeypatch.setattr("cura_ai.llm.__file__", str(tmp_path / "a" / "b" / "llm.py"))  # no .tools
     monkeypatch.setenv("APPDATA", str(tmp_path))
     for version in ("2.1.99", "2.1.222"):
         exe = tmp_path / "Claude" / "claude-code" / version / "abc" / "claude.exe"

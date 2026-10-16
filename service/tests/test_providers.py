@@ -5,7 +5,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import pytest
 
 from cura_ai.assistant import settings_turn
-from cura_ai.catalogue import Catalogue
 from cura_ai.cli import handle_request
 from cura_ai.llm import ClaudeCliClient, LlmError
 from cura_ai.providers import (
@@ -200,9 +199,9 @@ def test_factory_picks_the_provider_and_only_claude_has_effort():
 # --- end to end: through the dialogue code and the request interface -----------------------------
 
 
-def test_a_dialogue_turn_through_ollama_is_validated_like_any_other(server):
+def test_a_dialogue_turn_through_ollama_is_validated_like_any_other(server, flsun):
     s = server(ollama_answer(json.dumps(PROPOSAL)))
-    catalogue = Catalogue.from_definitions("flsun_q5")
+    catalogue = flsun
     result = settings_turn(
         OllamaClient("m", host=s.url), catalogue, "P", "M", [Message(role="user", content="fast")]
     )
