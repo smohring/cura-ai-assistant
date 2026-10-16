@@ -1,0 +1,7 @@
+# Same checks as .github/workflows/ci.yml, for a GitLab mirror.
+test:
+  image: python:3.12
+  script:
+    - python -m pip install -e "service[dev]"
+    - ruff check --config service/pyproject.toml .
+    - cd service && python -m pytest -q

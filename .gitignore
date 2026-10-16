@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Editors
+.vs/
+.vscode/
+.idea/
+*.user
+
+# Generated slicer output
+*.gcode
+*.ufp
+
+# Local tooling
+.tools/
+.work/
+.git-commit-msg.tmp
+.claude/settings.local.json
+
+# Environment and OS leftovers
+.env
+*.log
+.DS_Store
+Thumbs.db
+
+# Packaged plugin builds
+*.curapackage

@@ -1,0 +1,8 @@
+{
+    "name": "AI Assistant",
+    "author": "Steffen Mohring",
+    "version": "0.1.0",
+    "api": 8,
+    "description": "Talk to Cura: describe a goal and get print settings, orientation, part handling and setup done or proposed, with clarifying questions.",
+    "i18n-catalog": "cura"
+}
