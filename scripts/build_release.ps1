@@ -8,7 +8,7 @@ $dist = Join-Path $repo "dist"
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Force $stage, $dist | Out-Null
 
-foreach ($path in "cura_extension", "service\cura_ai", "service\pyproject.toml", "scripts\install_plugin.ps1", "docs") {
+foreach ($path in "cura_extension", "service\cura_ai", "service\pyproject.toml", "install.ps1", "install.cmd", "docs") {
     $target = Join-Path $stage $path
     New-Item -ItemType Directory -Force (Split-Path $target) | Out-Null
     Copy-Item (Join-Path $repo $path) $target -Recurse -Force

@@ -83,23 +83,24 @@ The provider and model are chosen on the options page; nothing changes until you
 
 ## Install
 
-```powershell
-git clone https://github.com/smohring/cura-ai-assistant.git
-cd cura-ai-assistant\service
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-cd ..
-powershell -ExecutionPolicy Bypass -File scripts\install_plugin.ps1
-```
+1. Download `cura-ai-assistant-<version>.zip` from the [latest release](../../releases/latest) and
+   unzip it anywhere.
+2. Double-click **`install.cmd`**. It finds Python 3.11 or newer, sets up a private environment in
+   `%LOCALAPPDATA%\CuraAiAssistant` (downloads numpy, scipy and pydantic the first time), copies the
+   plugin into Cura and tells you whether Claude Code was found.
+3. Restart Cura. The assistant is under **Extensions > AI Assistant > Open assistant...**.
 
-From a release archive instead of a clone: unzip it somewhere permanent and run the same commands
-from the unzipped folder.
+You can delete the unzipped folder afterwards. To update, run `install.cmd` of the new version again;
+`install.cmd -Uninstall` removes everything it installed. Without Python 3.11+ the installer says so
+and how to get it (`winget install Python.Python.3.12`). If your only Python is the one from the
+Microsoft Store, it still works; the installer then stores where Claude Code is (run it again after
+a Claude Code update, or use a Python from python.org).
 
-Restart Cura. The assistant is under **Extensions > AI Assistant > Open assistant...**.
+If several Cura versions are installed it uses the newest; choose another with
+`install.cmd -CuraVersion 5.12`.
 
-The plugin calls the service in `service\.venv` where you cloned it, so keep the folder where it is
-(or run the install script again after moving it). After changing anything under
-`cura_extension\`, run the script again and restart Cura.
+From a clone of the repository (for development) use `scripts\install_plugin.ps1` instead, see
+[Development](#development).
 
 ## Use
 
@@ -156,6 +157,10 @@ cd service
 .\.venv\Scripts\python.exe -m pytest          # 300+ tests, mock servers and fake runners
 .\.venv\Scripts\ruff.exe check .
 ```
+
+`scripts\install_plugin.ps1` installs the plugin from the working tree against the service in
+`service\.venv` (create it with `python -m venv .venv` and `pip install -e ".[dev]"` in `service\`);
+`scripts	est_install.ps1` tries the user installer in a throw-away folder.
 
 Real-engine tests need Cura installed and skip themselves otherwise. A live test against the real
 Claude CLI is opt-in: `$env:CURA_AI_LIVE = "1"; python -m pytest -m live`.

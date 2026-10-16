@@ -21,4 +21,6 @@ First release.
   Ollama. Only Claude and the Ollama model list were tried with a live account.
 - The assistant dialog does not block Cura's main window.
 - Calls to Claude ignore the user's own Claude settings and instructions (`--setting-sources local`).
+- One-step installer: `install.cmd` sets up a private Python environment, copies the plugin into
+  Cura and reports whether Claude Code was found; `-Uninstall` removes it again.
 - Tested with Cura 5.13 on Windows and one delta printer.
