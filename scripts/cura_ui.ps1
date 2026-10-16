@@ -160,10 +160,11 @@ function Open-Assistant {
 function Ask-Assistant($dlg, [string]$text, [string]$button = "Send", [int]$timeoutSeconds = 60) {
     Activate-Window $dlg  # another app may have come to the front since the last call
     $r = $dlg.Current.BoundingRectangle
-    $bottom = @(Find-Elements $dlg "^$button$" | Where-Object { $_.Current.ControlType.ProgrammaticName -match 'Button' })[0]
-    Click-At ([int]($r.X + 235)) ([int]($bottom.Current.BoundingRectangle.Y + 17))
+    $find = { param($name) @(Find-Elements $dlg "^$name$" | Where-Object { $_.Current.ControlType.ProgrammaticName -match 'Button' })[0] }
+    $send = & $find "Send"   # the input line sits in the row of the Send button
+    Click-At ([int]($r.X + 235)) ([int]($send.Current.BoundingRectangle.Y + 17))
     Send-Text $text
-    Click-Element $bottom
+    Click-Element (& $find $button)
     for ($i = 0; $i -lt $timeoutSeconds / 2; $i++) {
         Start-Sleep -Seconds 2
         if (-not (Find-Elements $dlg 'Thinking|Slicing|Test slicing')) { break }

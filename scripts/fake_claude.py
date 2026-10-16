@@ -88,6 +88,25 @@ PART_ANSWERS = {  # a word in the user's last message picks the canned plan
 }
 
 
+PART_WORDS = tuple(PART_ANSWERS) + ("scale", "copies", "bigger", "material", "quality", "printer")
+
+
+def plan_answer(last: str, text: str) -> dict:
+    """Tasks for the helpers named by words in the message, in the planner's order."""
+    helpers = []
+    if any(w in last for w in PART_WORDS):
+        helpers.append("parts")
+    if "orient" in last or "misroute" in last or "strong" in last:
+        helpers.append("orientation")
+    if any(w in last for w in ("infill", "setting", "strong", "surface")):
+        helpers.append("settings")
+    helpers = helpers or ["parts"]
+    return {
+        "announcement": "I will do this in steps." if len(helpers) > 1 else "",
+        "tasks": [{"helper": h, "instruction": text} for h in helpers],
+    }
+
+
 def part_answer(text: str, context: dict) -> dict:
     active = context.get("active", {})
     if "restore" in text:  # back to the generic PLA material and a custom (non built-in) profile
@@ -133,15 +152,10 @@ def main() -> None:
     last = (prompt.get("conversation") or [{}])[-1].get("content", "").lower()
     if "slow" in last:  # lets tests press Cancel
         time.sleep(40)
-    if "weights" in schema.get("properties", {}) and "misroute" in last:
+    if "tasks" in schema.get("properties", {}):  # the planner: one task per helper the words name
+        answer = plan_answer(last, prompt["conversation"][-1]["content"])
+    elif "weights" in schema.get("properties", {}) and "misroute" in last:
         answer = {"kind": "redirect", "redirect_to": "parts"}  # a helper hands the message on
-    elif "action" in schema.get("properties", {}):  # the router
-        if "orient" in last or "misroute" in last:
-            answer = {"action": "orientation"}
-        elif "infill" in last or "setting" in last:
-            answer = {"action": "settings"}
-        else:
-            answer = {"action": "parts"}
     elif "target_axis" in schema.get("properties", {}):
         answer = part_answer(prompt["conversation"][-1]["content"].lower(), prompt["context"])
     elif "weights" in schema.get("properties", {}):

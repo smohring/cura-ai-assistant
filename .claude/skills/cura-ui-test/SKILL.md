@@ -37,6 +37,13 @@ with a screenshot of the Cura window.** Helpers: `scripts/cura_ui.ps1` (dot-sour
 
 ## Pitfalls that cost time
 
+- `Ask-Assistant $dlg 'text' ['Send'|'Suggest settings'|...]` clicks the input at the row of the
+  **Send** button (the three helper buttons sit one row lower) and then the named button.
+  Re-fetch `Get-AssistantWindow` when a call fails with "FindAll ... Unbekannter Fehler": the
+  dialog's element can go stale after a long wait. The stand-in plans by words (`plan_answer` in
+  `scripts/fake_claude.py`): "strong" gives orientation + settings (plus parts if a part word is
+  there), "misroute" makes the orientation helper hand the message on, "slow" lets you press Cancel.
+
 - **Check `Get-Process UltiMaker-Cura` before starting your own Cura.** The user may be working
   in one (started at a time you did not start it): a second instance shares the configuration, and
   `install_plugin.ps1 -FakeClaude` would point *their* plugin at the stand-in (config.json is read
