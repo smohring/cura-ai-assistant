@@ -1,5 +1,7 @@
 # Cura AI Assistant
 
+[![CI](https://github.com/smohring/cura-ai-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/smohring/cura-ai-assistant/actions/workflows/ci.yml)
+
 An assistant for [UltiMaker Cura](https://ultimaker.com/software/ultimaker-cura/) that you talk to
 like a voice assistant. Describe what you want in your own words - "it is a small figure, the
 surface must be as good as possible", "make it 150 % and find the best orientation", "switch to
@@ -61,7 +63,7 @@ not name it, and runs them one after another. Anything you do not want, you unti
 ## Install
 
 ```powershell
-git clone <this repository> cura-ai-assistant
+git clone https://github.com/smohring/cura-ai-assistant.git
 cd cura-ai-assistant\service
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
